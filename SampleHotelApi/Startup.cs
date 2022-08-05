@@ -3,6 +3,7 @@ using Kros.AspNetCore;
 using Kros.AspNetCore.HealthChecks;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using SampleHotelApi.Options;
 using System.Reflection;
 
 namespace SampleHotelApi
@@ -27,6 +28,8 @@ namespace SampleHotelApi
             services
                 .AddControllers()
                 .AddFluentValidation();
+
+            services.AddJwtAuthentication(Configuration.GetSection("ApiJwtAuthorization").Get<ApiJwtAuthorizationSettings>());
 
             services
                 .AddSwaggerDocumentation(Configuration, options =>
@@ -70,7 +73,9 @@ namespace SampleHotelApi
                     ResponseWriter = HealthCheckResponseWriter.WriteHealthCheckResponseAsync
                 });
 
-                endpoints.MapControllers();
+                endpoints
+                    .MapControllers()
+                    .RequireAuthorization("ApiScope");
             });
         }
     }

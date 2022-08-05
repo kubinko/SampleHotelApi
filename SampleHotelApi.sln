@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleHotelApi", "SampleHotelApi\SampleHotelApi.csproj", "{2E5F7291-F012-40E9-94A6-55E4A3B36181}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "IdentityServer\IdentityServer.csproj", "{04EF7B4E-75F9-463B-8947-8CAAD5065B94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{2E5F7291-F012-40E9-94A6-55E4A3B36181}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E5F7291-F012-40E9-94A6-55E4A3B36181}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E5F7291-F012-40E9-94A6-55E4A3B36181}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04EF7B4E-75F9-463B-8947-8CAAD5065B94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04EF7B4E-75F9-463B-8947-8CAAD5065B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04EF7B4E-75F9-463B-8947-8CAAD5065B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04EF7B4E-75F9-463B-8947-8CAAD5065B94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

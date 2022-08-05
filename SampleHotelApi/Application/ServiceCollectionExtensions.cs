@@ -1,9 +1,13 @@
 ﻿using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+using SampleHotelApi.Infrastructure;
+using SampleHotelApi.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
+using System.Security.Claims;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -26,6 +30,42 @@ namespace Microsoft.Extensions.DependencyInjection
                 o.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
                 o.DisableDataAnnotationsValidation = true;
             });
+
+        /// <summary>
+        /// Adds authentication and authorization.
+        /// </summary>
+        /// <param name="services">DI container.</param>
+        /// <param name="settings">Authentication settings.</param>
+        public static void AddJwtAuthentication(
+            this IServiceCollection services,
+            ApiJwtAuthorizationSettings settings)
+        {
+            services.AddAuthentication(settings.Scheme)
+                .AddJwtBearer(settings.Scheme, options =>
+                {
+                    options.Authority = settings.Authority;
+                    options.RequireHttpsMetadata = settings.RequireHttpsMetadata;
+
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false
+                    };
+                });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ApiScope", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim("scope", settings.Scope);
+                });
+                options.AddPolicy(Policies.AdminPolicyName, policyAdmin =>
+                {
+                    policyAdmin.AuthenticationSchemes.Add(settings.Scheme);
+                    policyAdmin.RequireClaim(ClaimTypes.Role, Policies.AdminPolicyName);
+                });
+            });
+        }
 
         /// <summary>
         /// Adds services.
