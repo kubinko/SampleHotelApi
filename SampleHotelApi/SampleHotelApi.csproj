@@ -23,7 +23,6 @@
   <ItemGroup>
     <Folder Include="Application\Commands\Transactions\" />
     <Folder Include="Application\Commands\Reservations\" />
-    <Folder Include="Application\Commands\Rooms\" />
   </ItemGroup>
 
   <ItemGroup>

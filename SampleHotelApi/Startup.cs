@@ -1,8 +1,14 @@
 ﻿using FluentValidation.AspNetCore;
 using Kros.AspNetCore;
 using Kros.AspNetCore.HealthChecks;
+using MediatR;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.OpenApi.Models;
+using SampleHotelApi.Application.Services;
+using SampleHotelApi.Domain;
+using SampleHotelApi.Infrastructure;
+using SampleHotelApi.Infrastructure.DbMock;
 using SampleHotelApi.Options;
 using System.Reflection;
 
@@ -25,11 +31,19 @@ namespace SampleHotelApi
         /// <param name="services">Service.</param>
         public override void ConfigureServices(IServiceCollection services)
         {
-            services
-                .AddControllers()
-                .AddFluentValidation();
+            services.AddControllers();
+            services.AddFluentValidation();
 
             services.AddJwtAuthentication(Configuration.GetSection("ApiJwtAuthorization").Get<ApiJwtAuthorizationSettings>());
+
+            services
+                .AddMediatR(Assembly.GetExecutingAssembly())
+                .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
+                .AddScoped<IActiveUserInfoService, ActiveUserInfoService>()
+                .AddSingleton<IDatabase, Database>()
+                .AddScoped<ICommentRepository, CommentRepository>()
+                .AddScoped<IRoomRepository, RoomRepository>()
+                .AddScoped<IReservationRepository, ReservationRepository>();
 
             services
                 .AddSwaggerDocumentation(Configuration, options =>
@@ -37,6 +51,23 @@ namespace SampleHotelApi
                     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                     options.IncludeXmlComments(xmlPath, true);
+                    options.CustomSchemaIds(s => s.FullName?.Replace("+", "."));
+
+                    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                    {
+                        Type = SecuritySchemeType.OAuth2,
+                        Flows = new OpenApiOAuthFlows
+                        {
+                            Password = new OpenApiOAuthFlow
+                            {
+                                TokenUrl = new Uri("http://localhost:5001/connect/token"),
+                                Scopes = new Dictionary<string, string>
+                                {
+                                    {"hotel_api", "Sample hotel API"}
+                                }
+                            }
+                        }
+                    });
                 })
                 .AddFluentValidationRulesToSwagger();
             services.AddBasicHealthChecks();
@@ -56,10 +87,14 @@ namespace SampleHotelApi
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hotel API v1");
+                    c.OAuthClientId("client");
+                    c.OAuthClientSecret("secret");
+                    c.OAuthUsername("alice");
+                    c.OAuthAppName("Sample hotel API - Swagger");
                 });
             }
 
-            app.UseExceptionHandler("/error");
+            app.UseExceptionHandler(new ExceptionHandlerOptions() { AllowStatusCode404Response = true, ExceptionHandlingPath = "/error" });
             app.UseRouting();
 
             app.UseAuthentication();

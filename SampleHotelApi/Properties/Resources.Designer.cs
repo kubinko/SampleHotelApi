@@ -61,11 +61,47 @@ namespace SampleHotelApi.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Room with numer {0} already exists..
+        /// </summary>
+        internal static string DuplicateRoomNumber {
+            get {
+                return ResourceManager.GetString("DuplicateRoomNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot delete finished reservation..
+        /// </summary>
+        internal static string ReservationFinished {
+            get {
+                return ResourceManager.GetString("ReservationFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resource with id {0} was not found..
         /// </summary>
         internal static string ResourceNotFound {
             get {
                 return ResourceManager.GetString("ResourceNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Room {0} does not exist..
+        /// </summary>
+        internal static string RoomNotFound {
+            get {
+                return ResourceManager.GetString("RoomNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Room {0} is already occupied between {1} and {2}..
+        /// </summary>
+        internal static string RoomOccupied {
+            get {
+                return ResourceManager.GetString("RoomOccupied", resourceCulture);
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using FluentValidation.AspNetCore;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Any;
@@ -24,12 +25,14 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="builder">MVC builder.</param>
         /// <returns>MVC builder.</returns>
-        public static IMvcBuilder AddFluentValidation(this IMvcBuilder builder)
-            => builder.AddFluentValidation(o =>
-            {
-                o.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-                o.DisableDataAnnotationsValidation = true;
-            });
+        public static IServiceCollection AddFluentValidation(this IServiceCollection services)
+            => services
+                .AddFluentValidationAutoValidation(o =>
+                {
+                    o.DisableDataAnnotationsValidation = true;
+                })
+                .AddFluentValidationClientsideAdapters()
+                .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
         /// <summary>
         /// Adds authentication and authorization.
