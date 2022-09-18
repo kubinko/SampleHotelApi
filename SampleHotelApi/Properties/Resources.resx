@@ -138,4 +138,9 @@
 1 - period start
 2 - period end</comment>
   </data>
+  <data name="TooManyGuests" xml:space="preserve">
+    <value>Maximum capacity for room {0} is {1}.</value>
+    <comment>0 - room ID
+1 - maximum room capacity</comment>
+  </data>
 </root>

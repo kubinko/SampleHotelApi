@@ -104,5 +104,14 @@ namespace SampleHotelApi.Properties {
                 return ResourceManager.GetString("RoomOccupied", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum capacity for room {0} is {1}..
+        /// </summary>
+        internal static string TooManyGuests {
+            get {
+                return ResourceManager.GetString("TooManyGuests", resourceCulture);
+            }
+        }
     }
 }

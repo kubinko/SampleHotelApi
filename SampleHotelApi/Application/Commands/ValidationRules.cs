@@ -128,5 +128,105 @@ namespace SampleHotelApi.Application.Commands
             => rule.MaximumLength(500);
 
         #endregion
+
+        #region Reservation
+
+        /// <summary>
+        /// Validation rule for room ID.
+        /// </summary>
+        /// <typeparam name="T">Command type.</typeparam>
+        /// <param name="rule">Rule</param>
+        /// <returns>Validation rule</returns>
+        public static IRuleBuilderOptions<T, long> RoomIdValidation<T>(this IRuleBuilder<T, long> rule)
+            => rule
+                .NotEmpty()
+                .GreaterThan(0);
+
+        /// <summary>
+        /// Validation rule for date.
+        /// </summary>
+        /// <typeparam name="T">Command type.</typeparam>
+        /// <param name="rule">Rule</param>
+        /// <returns>Validation rule</returns>
+        public static IRuleBuilderOptions<T, DateTime> DateValidation<T>(this IRuleBuilder<T, DateTime> rule)
+            => rule
+                .NotNull()
+                .GreaterThanOrEqualTo(DateTime.Now);
+
+        /// <summary>
+        /// Validation rule for number of guests.
+        /// </summary>
+        /// <typeparam name="T">Command type.</typeparam>
+        /// <param name="rule">Rule</param>
+        /// <returns>Validation rule</returns>
+        public static IRuleBuilderOptions<T, int> NumberOfGuestsValidation<T>(this IRuleBuilder<T, int> rule)
+            => rule
+                .NotEmpty()
+                .GreaterThan(0);
+
+        /// <summary>
+        /// Validation rule for customer name.
+        /// </summary>
+        /// <typeparam name="T">Command type.</typeparam>
+        /// <param name="rule">Rule</param>
+        /// <returns>Validation rule</returns>
+        public static IRuleBuilderOptions<T, string> CustomerNameValidation<T>(this IRuleBuilder<T, string> rule)
+            => rule
+                .NotEmpty()
+                .MaximumLength(255);
+
+        /// <summary>
+        /// Validation rule for customer e-mail.
+        /// </summary>
+        /// <typeparam name="T">Command type.</typeparam>
+        /// <param name="rule">Rule</param>
+        /// <returns>Validation rule</returns>
+        public static IRuleBuilderOptions<T, string> CustomerEmailValidation<T>(this IRuleBuilder<T, string> rule)
+            => rule
+                .NotEmpty()
+                .MaximumLength(255)
+                .EmailAddress();
+
+        /// <summary>
+        /// Validation rule for customer phone number.
+        /// </summary>
+        /// <typeparam name="T">Command type.</typeparam>
+        /// <param name="rule">Rule</param>
+        /// <returns>Validation rule</returns>
+        public static IRuleBuilderOptions<T, string?> CustomerPhoneValidation<T>(this IRuleBuilder<T, string?> rule)
+            => rule
+                .MaximumLength(20);
+
+        /// <summary>
+        /// Validation rule for accomodation price.
+        /// </summary>
+        /// <typeparam name="T">Command type.</typeparam>
+        /// <param name="rule">Rule</param>
+        /// <returns>Validation rule</returns>
+        public static IRuleBuilderOptions<T, decimal> AccomodationPriceValidation<T>(this IRuleBuilder<T, decimal> rule)
+            => rule.GreaterThanOrEqualTo(0);
+
+        /// <summary>
+        /// Validation rule for accomodation price.
+        /// </summary>
+        /// <typeparam name="T">Command type.</typeparam>
+        /// <param name="rule">Rule</param>
+        /// <returns>Validation rule</returns>
+        public static IRuleBuilderOptions<T, decimal?> AccomodationPriceValidation<T>(this IRuleBuilder<T, decimal?> rule)
+            => rule.GreaterThanOrEqualTo(0);
+
+        /// <summary>
+        /// Validation rule for reservation state.
+        /// </summary>
+        /// <typeparam name="T">Command type.</typeparam>
+        /// <param name="rule">Rule</param>
+        /// <returns>Validation rule</returns>
+        public static IRuleBuilderOptions<T, ReservationState> ReservationStateValidation<T>(
+            this IRuleBuilder<T, ReservationState> rule)
+            => rule
+                .NotEmpty()
+                .IsInEnum();
+
+        #endregion
     }
 }
