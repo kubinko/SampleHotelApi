@@ -23,8 +23,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <summary>
         /// Registers FluentValidation.
         /// </summary>
-        /// <param name="builder">MVC builder.</param>
-        /// <returns>MVC builder.</returns>
+        /// <param name="services">DI container.</param>
         public static IServiceCollection AddFluentValidation(this IServiceCollection services)
             => services
                 .AddFluentValidationAutoValidation(o =>
