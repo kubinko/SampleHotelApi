@@ -10,6 +10,7 @@ namespace SampleHotelApi.Application.Controllers
     /// Room reservations controller.
     /// </summary>
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [Produces("application/json")]
     public class ReservationsController : ApiBaseController
     {
         /// <summary>
@@ -182,6 +183,7 @@ namespace SampleHotelApi.Application.Controllers
         /// <returns>Reservations' CSV report.</returns>
         [HttpGet("report/{reportDate}", Name = nameof(GetHotelReservationsSheet))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FileResult))]
+        [Produces("text/csv")]
         public async Task<FileResult> GetHotelReservationsSheet(DateTime reportDate)
         {
             Response.Headers.ContentDisposition = $"inline; filename=report-{reportDate}.csv";

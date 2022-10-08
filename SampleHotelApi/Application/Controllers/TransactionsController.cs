@@ -9,6 +9,7 @@ namespace SampleHotelApi.Application.Controllers
     /// Transactions controller.
     /// </summary>
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [Produces("application/json")]
     public class TransactionsController : ApiBaseController
     {
         /// <summary>

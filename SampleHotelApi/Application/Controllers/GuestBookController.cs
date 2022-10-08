@@ -10,6 +10,7 @@ namespace SampleHotelApi.Application.Controllers
     /// Guest book controller.
     /// </summary>    
     [AllowAnonymous]
+    [Produces("application/json")]
     public class GuestBookController : ApiBaseController
     {
         /// <summary>

@@ -8,6 +8,7 @@ namespace SampleHotelApi.Application.Controllers
     /// <summary>
     /// Test controller.
     /// </summary>
+    [Produces("application/json")]
     public class TestController : ApiBaseController
     {
         /// <summary>
