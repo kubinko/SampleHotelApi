@@ -3,6 +3,7 @@ using Kros.AspNetCore;
 using Kros.AspNetCore.HealthChecks;
 using MediatR;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.BuilderMiddlewares;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 using SampleHotelApi.Application.Services;
@@ -14,6 +15,9 @@ using System.Reflection;
 
 namespace SampleHotelApi
 {
+    /// <summary>
+    /// Startup.
+    /// </summary>
     public class Startup : BaseStartup
     {
         /// <summary>
@@ -43,7 +47,8 @@ namespace SampleHotelApi
                 .AddSingleton<IDatabase, Database>()
                 .AddScoped<ICommentRepository, CommentRepository>()
                 .AddScoped<IRoomRepository, RoomRepository>()
-                .AddScoped<IReservationRepository, ReservationRepository>();
+                .AddScoped<IReservationRepository, ReservationRepository>()
+                .AddScoped<ITransactionRepository, TransactionRepository>();
 
             services
                 .AddSwaggerDocumentation(Configuration, options =>
@@ -94,8 +99,8 @@ namespace SampleHotelApi
                 });
             }
 
-            app.UseExceptionHandler(new ExceptionHandlerOptions() { AllowStatusCode404Response = true, ExceptionHandlingPath = "/error" });
             app.UseRouting();
+            app.UseErrorHandling();
 
             app.UseAuthentication();
             app.UseAuthorization();

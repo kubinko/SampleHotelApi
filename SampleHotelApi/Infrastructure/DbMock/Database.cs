@@ -15,5 +15,8 @@ namespace SampleHotelApi.Infrastructure.DbMock
 
         /// <inheritdoc/>
         public DataTable<Reservation> Reservations { get; } = new();
+
+        /// <inheritdoc/>
+        public DataTable<Transaction> Transactions { get; } = new();
     }
 }

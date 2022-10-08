@@ -61,6 +61,15 @@ namespace SampleHotelApi.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot remove transaction from finished reservation..
+        /// </summary>
+        internal static string CannotDeleteTransactionFromFinishedReservation {
+            get {
+                return ResourceManager.GetString("CannotDeleteTransactionFromFinishedReservation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Room with numer {0} already exists..
         /// </summary>
         internal static string DuplicateRoomNumber {
@@ -70,11 +79,29 @@ namespace SampleHotelApi.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reservation {0} is already paid in full..
+        /// </summary>
+        internal static string ReservationAlreadyPaid {
+            get {
+                return ResourceManager.GetString("ReservationAlreadyPaid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot delete finished reservation..
         /// </summary>
         internal static string ReservationFinished {
             get {
                 return ResourceManager.GetString("ReservationFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reservation {0} does not exist..
+        /// </summary>
+        internal static string ReservationNotFound {
+            get {
+                return ResourceManager.GetString("ReservationNotFound", resourceCulture);
             }
         }
         
