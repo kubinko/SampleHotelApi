@@ -20,7 +20,7 @@ namespace SampleHotelApi.Application.Commands
             When(x => x.SingleGuestSurcharge != null, () => RuleFor(x => x.SingleGuestSurcharge).SingleGuestSurchargeValidation());
             RuleFor(x => x.Area).AreaValidation();
             RuleFor(x => x.RoomType).RoomTypeValidation();
-            When(x => x.RoomDescription != null, () => RuleFor(x => x.RoomDescription).RoomDescriptionValidation());
+            RuleFor(x => x.RoomDescription).RoomDescriptionValidation();
         }
     }
 }

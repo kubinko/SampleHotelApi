@@ -22,13 +22,11 @@ namespace SampleHotelApi.Application.Controllers
         /// <response code="404">Specified room does not exist.</response>
         /// <response code="409">Room is already occupied in specified dates or
         /// required number of guests exceeds room capacity.</response>
-        /// <response code="415">Payload type is not valid (i.e. if payload is empty).</response>
         [HttpPost(Name = nameof(CreateReservation))]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
         public async Task<IActionResult> CreateReservation(CreateReservationCommand command)
             => await this.SendCreateCommand(command);
 
@@ -42,13 +40,11 @@ namespace SampleHotelApi.Application.Controllers
         /// <response code="404">Reservation was not found or room was not found.</response>
         /// <response code="409">Room is already occupied in specified dates or
         /// required number of guests exceeds room capacity.</response>
-        /// <response code="415">Payload type is not valid (i.e. if payload is empty).</response>
         [HttpPut("{id}", Name = nameof(UpdateReservationInformation))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
         public async Task<IActionResult> UpdateReservationInformation(long id, UpdateReservationCommand command)
         {
             command.Id = id;
@@ -65,12 +61,10 @@ namespace SampleHotelApi.Application.Controllers
         /// <response code="200">Reservation state updated.</response>
         /// <response code="400">Payload is not valid.</response>
         /// <response code="404">Reservation was not found.</response>
-        /// <response code="415">Payload type is not valid (i.e. if payload is empty).</response>
         [HttpPut("{id}/state", Name = nameof(UpdateReservationState))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
         public async Task<IActionResult> UpdateReservationState(long id, UpdateReservationStateCommand command)
         {
             command.Id = id;

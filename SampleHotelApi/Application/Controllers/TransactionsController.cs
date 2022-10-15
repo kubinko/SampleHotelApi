@@ -20,13 +20,11 @@ namespace SampleHotelApi.Application.Controllers
         /// <response code="400">Payload is not valid.</response>
         /// <response code="404">Specified reservation does not exist.</response>
         /// <response code="409">Reservation is already fully paid.</response>
-        /// <response code="415">Payload type is not valid (i.e. if payload is empty).</response>
         [HttpPost(Name = nameof(AddTransaction))]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
         public async Task<IActionResult> AddTransaction(AddTransactionCommand command)
             => await this.SendCreateCommand(command);
 
@@ -119,11 +117,9 @@ namespace SampleHotelApi.Application.Controllers
         /// <param name="command">Payload.</param>
         /// <response code="201">Payment added.</response>
         /// <response code="400">Payload is not valid.</response>
-        /// <response code="415">Payload type is not valid (i.e. if payload is empty).</response>
         [HttpPost("payment", Name = nameof(AddDummyPayment))]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
         public async Task<IActionResult> AddDummyPayment(AddPaymentCommand command)
         {
             await this.SendRequest(command);

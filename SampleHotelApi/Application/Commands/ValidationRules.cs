@@ -75,8 +75,8 @@ namespace SampleHotelApi.Application.Commands
         /// <returns>Validation rule</returns>
         public static IRuleBuilderOptions<T, decimal> BaseBedPriceValidation<T>(this IRuleBuilder<T, decimal> rule)
             => rule
-                .NotEmpty()
-                .GreaterThan(0);
+                .NotNull()
+                .GreaterThanOrEqualTo(0);
 
         /// <summary>
         /// Validation rule for extra bed price.
@@ -94,7 +94,7 @@ namespace SampleHotelApi.Application.Commands
         /// <param name="rule">Rule</param>
         /// <returns>Validation rule</returns>
         public static IRuleBuilderOptions<T, decimal?> SingleGuestSurchargeValidation<T>(this IRuleBuilder<T, decimal?> rule)
-            => rule.GreaterThan(0);
+            => rule.GreaterThanOrEqualTo(0);
 
         /// <summary>
         /// Validation rule for area.
@@ -104,8 +104,8 @@ namespace SampleHotelApi.Application.Commands
         /// <returns>Validation rule</returns>
         public static IRuleBuilderOptions<T, float> AreaValidation<T>(this IRuleBuilder<T, float> rule)
             => rule
-                .NotEmpty()
-                .GreaterThan(0);
+                .NotNull()
+                .GreaterThanOrEqualTo(0);
 
         /// <summary>
         /// Validation rule for room type.

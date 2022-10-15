@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /IdentityServer/tempkey.jwk
 /SampleHotelApi/Properties/ServiceDependencies/demo-hotel-api - Web Deploy/profile.arm.json
+/SampleHotelApi/Properties/ServiceDependencies/demo-hotel-api - Zip Deploy/profile.arm.json
+/IdentityServer/Properties/ServiceDependencies/demo-hotel-is - Zip Deploy/profile.arm.json

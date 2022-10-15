@@ -62,11 +62,6 @@
     public enum RoomType
     {
         /// <summary>
-        /// Undefined.
-        /// </summary>
-        Undefined = 0,
-
-        /// <summary>
         /// Classic room.
         /// </summary>
         Classic = 1,
