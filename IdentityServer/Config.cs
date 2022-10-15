@@ -41,6 +41,19 @@ namespace IdentityServer
                     },
                     RequireClientSecret = false,
                     AllowedScopes = { "hotel_api", "openid", "profile", "role" }
+                },
+                new Client
+                {
+                    ClientId = "swagger",
+                    ClientName = "Swagger UI",
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    RequireClientSecret = false,
+                    AllowedScopes = { "hotel_api" },
+                    AllowedCorsOrigins = { "http://localhost:5000" }
                 }
             };
 

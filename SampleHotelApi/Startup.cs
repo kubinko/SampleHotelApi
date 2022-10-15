@@ -60,17 +60,26 @@ namespace SampleHotelApi
 
                     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                     {
+                        Description = "Na získanie autorizačného tokenu zadaj prihlasovacie meno a heslo.\nDostupní používatelia:\n" +
+                            " - username: **alice**, password: *password*\n" +
+                            " - username: **bob**, password: *password*",
                         Type = SecuritySchemeType.OAuth2,
                         Flows = new OpenApiOAuthFlows
                         {
                             Password = new OpenApiOAuthFlow
                             {
-                                TokenUrl = new Uri("http://localhost:5001/connect/token"),
-                                Scopes = new Dictionary<string, string>
-                                {
-                                    {"hotel_api", "Sample hotel API"}
-                                }
+                                TokenUrl = new Uri("http://localhost:5001/connect/token")
                             }
+                        }
+                    });
+                    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "oauth2" }
+                            },
+                            Array.Empty<string>()
                         }
                     });
                 })
@@ -92,7 +101,7 @@ namespace SampleHotelApi
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hotel API v1");
-                    c.OAuthClientId("client");
+                    c.OAuthClientId("swagger");
                     c.OAuthClientSecret("secret");
                     c.OAuthUsername("alice");
                     c.OAuthAppName("Sample hotel API - Swagger");
