@@ -201,5 +201,29 @@ namespace SampleHotelApi.Application.Controllers
 
             return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/csv");
         }
+
+        /// <summary>
+        /// Gets reservation invoice.
+        /// </summary>
+        /// <param name="id">Reservation ID.</param>
+        /// <response code="200">Ok.</response>
+        /// <response code="404">Reservation invoice was not found.</response>
+        /// <returns>Reservation invoice.</returns>
+        [HttpGet("{id}/invoice", Name = nameof(GetReservationInvoice))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Produces("application/pdf")]
+        public async Task<IActionResult> GetReservationInvoice(long id)
+        {
+            bool hasReservation = await this.SendRequest(new GetReservationInvoiceQuery(id));
+            if (hasReservation)
+            {
+                return File(Properties.Resources.Invoice, "application/pdf");
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
     }
 }

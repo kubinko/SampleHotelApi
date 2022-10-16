@@ -2,6 +2,7 @@
 using Kros.Utils;
 using Mapster;
 using MediatR;
+using SampleHotelApi.Application.Notifications;
 using SampleHotelApi.Domain;
 using SampleHotelApi.Domain.Entities;
 using SampleHotelApi.Properties;
@@ -17,20 +18,26 @@ namespace SampleHotelApi.Application.Commands
     {
         private readonly IReservationRepository _repository;
         private readonly IRoomRepository _roomRepository;
+        private readonly IMediator _mediator;
 
         /// <summary>
         /// Ctor.
         /// </summary>
         /// <param name="repository">Repository for room reservations.</param>
         /// <param name="roomRepository">Repository for hotel rooms.</param>
-        public UpdateReservationCommandHandler(IReservationRepository repository, IRoomRepository roomRepository)
+        /// <param name="mediator">MediatR.</param>
+        public UpdateReservationCommandHandler(
+            IReservationRepository repository,
+            IRoomRepository roomRepository,
+            IMediator mediator)
         {
             _repository = Check.NotNull(repository, nameof(repository));
             _roomRepository = Check.NotNull(roomRepository, nameof(roomRepository));
+            _mediator = Check.NotNull(mediator, nameof(mediator));
         }
 
         /// <inheritdoc/>
-        public Task<Unit> Handle(UpdateReservationCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateReservationCommand request, CancellationToken cancellationToken)
         {
             Reservation? reservation = _repository.GetReservation(request.Id);
             if (reservation == null)
@@ -54,13 +61,21 @@ namespace SampleHotelApi.Application.Commands
                     string.Format(Resources.TooManyGuests, reservation.RoomId, room.MaxNumberOfBeds));
             }
 
+            ReservationState originalState = reservation.State;
             _repository.UpdateReservation(request.Id, request.Adapt<Reservation>());
 
-            return Unit.Task;
+            if (originalState != ReservationState.Finished && request.State == ReservationState.Finished)
+            {
+                await _mediator.Publish(
+                    new ReservationFinishedNotification() { ReservationId = request.Id },
+                    cancellationToken);
+            }
+
+            return Unit.Value;
         }
 
         /// <inheritdoc/>
-        public Task<Unit> Handle(UpdateReservationStateCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateReservationStateCommand request, CancellationToken cancellationToken)
         {
             Reservation? reservation = _repository.GetReservation(request.Id);
             if (reservation == null)
@@ -68,9 +83,17 @@ namespace SampleHotelApi.Application.Commands
                 throw new NotFoundException(string.Format(Resources.ResourceNotFound, request.Id));
             }
 
+            ReservationState originalState = reservation.State;
             _repository.UpdateReservationState(request.Id, request.State);
 
-            return Unit.Task;
+            if (originalState != ReservationState.Finished && request.State == ReservationState.Finished)
+            {
+                _mediator.Publish(
+                    new ReservationFinishedNotification() { ReservationId = request.Id },
+                    cancellationToken);
+            }
+
+            return Unit.Value;
         }
 
         private bool IsRoomOccupied(DateTime dateFrom, DateTime dateTo, long roomId, long reservationId)

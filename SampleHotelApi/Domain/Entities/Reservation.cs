@@ -61,6 +61,11 @@
         public ReservationState State { get; set; }
 
         /// <summary>
+        /// Whether invoice for reservation has been generated.
+        /// </summary>
+        public bool InvoiceGenerated { get; set; }
+
+        /// <summary>
         /// Timestamp of reservation creation.
         /// </summary>
         public DateTimeOffset CreatedTimestamp { get; set; }

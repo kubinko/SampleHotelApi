@@ -79,6 +79,16 @@ namespace SampleHotelApi.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Invoice {
+            get {
+                object obj = ResourceManager.GetObject("Invoice", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reservation {0} is already paid in full..
         /// </summary>
         internal static string ReservationAlreadyPaid {
