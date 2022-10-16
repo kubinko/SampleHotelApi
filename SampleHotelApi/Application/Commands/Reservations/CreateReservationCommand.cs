@@ -18,9 +18,9 @@ namespace SampleHotelApi.Application.Commands
         public DateTime DateTo { get; set; }
 
         /// <summary>
-        /// ID of room for accomodation.
+        /// Room number for accomodation.
         /// </summary>
-        public long RoomId { get; set; }
+        public int RoomNo { get; set; }
 
         /// <summary>
         /// Number of accomodated people.

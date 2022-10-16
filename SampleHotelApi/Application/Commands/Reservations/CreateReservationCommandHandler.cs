@@ -30,26 +30,27 @@ namespace SampleHotelApi.Application.Commands
         /// <inheritdoc/>
         public Task<long> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
         {
-            Room? room = _roomRepository.GetRoom(request.RoomId);
+            Room? room = _roomRepository.GetRoomByNumber(request.RoomNo);
             if (room == null)
             {
-                throw new NotFoundException(string.Format(Resources.RoomNotFound, request.RoomId));
+                throw new NotFoundException(string.Format(Resources.RoomNotFound, request.RoomNo));
             }
-            if (IsRoomOccupied(request.DateFrom, request.DateTo, request.RoomId))
+            if (IsRoomOccupied(request.DateFrom, request.DateTo, room.Id))
             {
                 throw new RequestConflictException(
-                    string.Format(Resources.RoomOccupied, request.RoomId, request.DateFrom, request.DateTo));
+                    string.Format(Resources.RoomOccupied, request.RoomNo, request.DateFrom, request.DateTo));
             }
             if (request.NumberOfGuests > room.MaxNumberOfBeds)
             {
                 throw new RequestConflictException(
-                    string.Format(Resources.TooManyGuests, request.RoomId, room.MaxNumberOfBeds));
+                    string.Format(Resources.TooManyGuests, request.RoomNo, room.MaxNumberOfBeds));
             }
 
             int numberOfNights = (request.DateTo.Date - request.DateFrom.Date).Days;
             request.AccomodationPrice ??= CalculateBaseRoomPrice(request.NumberOfGuests, room) * numberOfNights;
 
             var reservation = request.Adapt<Reservation>();
+            reservation.RoomId = room.Id;
             _repository.CreateReservation(reservation);
 
             return Task.FromResult(reservation.Id);

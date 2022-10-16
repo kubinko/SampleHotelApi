@@ -16,7 +16,7 @@ namespace SampleHotelApi.Application.Commands
             RuleFor(x => x.DateTo)
                 .DateValidation()
                 .Must((command, dateTo) => dateTo > command.DateFrom);
-            RuleFor(x => x.RoomId).RoomIdValidation();
+            RuleFor(x => x.RoomNo).RoomNumberValidation();
             RuleFor(x => x.NumberOfGuests).NumberOfGuestsValidation();
             RuleFor(x => x.CustomerName).CustomerNameValidation();
             RuleFor(x => x.ContactEmail).CustomerEmailValidation();
