@@ -56,16 +56,6 @@
         public decimal AccomodationPrice { get; set; }
 
         /// <summary>
-        /// Additional customer expenses related to reservation or accomodation.
-        /// </summary>
-        public decimal AdditionalExpenses { get; set; }
-
-        /// <summary>
-        /// Total amount of money paid for reservation.
-        /// </summary>
-        public decimal PaidAmount { get; set; }
-
-        /// <summary>
         /// Current reservation state.
         /// </summary>
         public ReservationState State { get; set; }

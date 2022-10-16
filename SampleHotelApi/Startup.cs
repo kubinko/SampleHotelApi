@@ -47,8 +47,7 @@ namespace SampleHotelApi
                 .AddSingleton<IDatabase, Database>()
                 .AddScoped<ICommentRepository, CommentRepository>()
                 .AddScoped<IRoomRepository, RoomRepository>()
-                .AddScoped<IReservationRepository, ReservationRepository>()
-                .AddScoped<ITransactionRepository, TransactionRepository>();
+                .AddScoped<IReservationRepository, ReservationRepository>();
 
             services
                 .AddSwaggerDocumentation(Configuration, options =>

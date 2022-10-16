@@ -21,10 +21,5 @@ namespace SampleHotelApi.Infrastructure.DbMock
         /// Reservations data table.
         /// </summary>
         public DataTable<Reservation> Reservations { get; }
-
-        /// <summary>
-        /// Transactions data table.
-        /// </summary>
-        public DataTable<Transaction> Transactions { get; }
     }
 }

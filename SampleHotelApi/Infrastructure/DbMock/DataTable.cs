@@ -8,7 +8,7 @@ namespace SampleHotelApi.Infrastructure.DbMock
     /// <typeparam name="TData"></typeparam>
     public class DataTable<TData> where TData : class, IEntityWithId, new()
     {
-        private Dictionary<long, TData> _data = new();
+        private readonly Dictionary<long, TData> _data = new();
         private long _currentId = 0;
 
         /// <summary>
@@ -55,5 +55,11 @@ namespace SampleHotelApi.Infrastructure.DbMock
         /// <param name="id">ID of record to be removed.</param>
         public void Delete(long id)
             => _data.Remove(id);
+
+        /// <summary>
+        /// Removes all records.
+        /// </summary>
+        public void DeleteAll()
+            => _data.Clear();
     }
 }

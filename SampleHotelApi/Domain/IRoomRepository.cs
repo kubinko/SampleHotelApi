@@ -28,6 +28,11 @@ namespace SampleHotelApi.Domain
         void RemoveRoom(long id);
 
         /// <summary>
+        /// Removes alls rooms.
+        /// </summary>
+        void RemoveAllRooms();
+
+        /// <summary>
         /// Attempts to retrieve room with <paramref name="id"/>.
         /// </summary>
         /// <param name="id">Room ID.</param>
@@ -39,7 +44,7 @@ namespace SampleHotelApi.Domain
         /// </summary>
         /// <param name="roomNo">Room number.</param>
         /// <returns>Room; <c>null</c>, if room with specified number does not exist.</returns>
-        Room? GetRoomByNumber(long roomNo);
+        Room? GetRoomByNumber(int roomNo);
 
         /// <summary>
         /// Retrieves all rooms.

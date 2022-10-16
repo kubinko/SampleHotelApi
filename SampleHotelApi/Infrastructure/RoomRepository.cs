@@ -43,11 +43,15 @@ namespace SampleHotelApi.Infrastructure
             => _db.Rooms.Delete(id);
 
         /// <inheritdoc/>
+        public void RemoveAllRooms()
+            => _db.Rooms.DeleteAll();
+
+        /// <inheritdoc/>
         public Room? GetRoom(long id)
             => _db.Rooms.Get(id);
 
         /// <inheritdoc/>
-        public Room? GetRoomByNumber(long roomNo)
+        public Room? GetRoomByNumber(int roomNo)
             => _db.Rooms.GetAll().FirstOrDefault(room => room.RoomNo == roomNo);
 
         /// <inheritdoc/>

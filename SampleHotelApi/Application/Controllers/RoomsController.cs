@@ -72,6 +72,22 @@ namespace SampleHotelApi.Application.Controllers
         }
 
         /// <summary>
+        /// Removes all hotel rooms.
+        /// </summary>
+        /// <response code="204">All rooms removed.</response>
+        /// <response code="403">User does not have sufficient rights to remove rooms.</response>
+        [HttpDelete(Name = nameof(RemoveAllRooms))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize(Policy = Policies.AdminPolicyName)]
+        public async Task<IActionResult> RemoveAllRooms()
+        {
+            await this.SendRequest(new RemoveAllRoomsCommand());
+
+            return NoContent();
+        }
+
+        /// <summary>
         /// Gets room information. 
         /// </summary>
         /// <param name="id">Room ID.</param>

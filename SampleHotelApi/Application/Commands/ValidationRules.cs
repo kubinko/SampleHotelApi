@@ -132,17 +132,6 @@ namespace SampleHotelApi.Application.Commands
         #region Reservation
 
         /// <summary>
-        /// Validation rule for room ID.
-        /// </summary>
-        /// <typeparam name="T">Command type.</typeparam>
-        /// <param name="rule">Rule</param>
-        /// <returns>Validation rule</returns>
-        public static IRuleBuilderOptions<T, long> RoomIdValidation<T>(this IRuleBuilder<T, long> rule)
-            => rule
-                .NotEmpty()
-                .GreaterThan(0);
-
-        /// <summary>
         /// Validation rule for date.
         /// </summary>
         /// <typeparam name="T">Command type.</typeparam>
@@ -226,56 +215,6 @@ namespace SampleHotelApi.Application.Commands
             => rule
                 .NotEmpty()
                 .IsInEnum();
-
-        #endregion
-
-        #region Transaction
-
-        /// <summary>
-        /// Validation rule for transaction amount.
-        /// </summary>
-        /// <typeparam name="T">Command type.</typeparam>
-        /// <param name="rule">Rule</param>
-        /// <returns>Validation rule</returns>
-        public static IRuleBuilderOptions<T, decimal> TransactionAmountValidation<T>(this IRuleBuilder<T, decimal> rule)
-            => rule.GreaterThan(0);
-
-        /// <summary>
-        /// Validation rule for transaction type state.
-        /// </summary>
-        /// <typeparam name="T">Command type.</typeparam>
-        /// <param name="rule">Rule</param>
-        /// <returns>Validation rule</returns>
-        public static IRuleBuilderOptions<T, TransactionType> TransactionTypeValidation<T>(
-            this IRuleBuilder<T, TransactionType> rule)
-            => rule
-                .NotEmpty()
-                .IsInEnum();
-
-        #endregion
-
-        #region Payment
-
-        /// <summary>
-        /// Validation rule for payment amount.
-        /// </summary>
-        /// <typeparam name="T">Command type.</typeparam>
-        /// <param name="rule">Rule</param>
-        /// <returns>Validation rule</returns>
-        public static IRuleBuilderOptions<T, decimal> PaymentAmountValidation<T>(this IRuleBuilder<T, decimal> rule)
-            => rule.GreaterThan(0);
-
-        /// <summary>
-        /// Validation rule for payment reference.
-        /// </summary>
-        /// <typeparam name="T">Command type.</typeparam>
-        /// <param name="rule">Rule</param>
-        /// <returns>Validation rule</returns>
-        public static IRuleBuilderOptions<T, string> ReferenceValidation<T>(
-            this IRuleBuilder<T, string> rule)
-            => rule
-                .NotEmpty()
-                .MaximumLength(10);
 
         #endregion
     }
