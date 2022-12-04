@@ -14,10 +14,15 @@ namespace SampleHotelApi.Application.Commands
         {
             RuleFor(x => x.RoomNo).RoomNumberValidation();
             RuleFor(x => x.BaseNumberOfBeds).BaseBedCountValidation();
-            When(x => x.MaxNumberOfBeds != null, () => RuleFor(x => x.MaxNumberOfBeds).MaximumBedCountValidation());
+            RuleFor(x => x.MaxNumberOfBeds).MaximumBedCountValidation();
+            When(
+                x => x.MaxNumberOfBeds != null,
+                () => RuleFor(x => x.MaxNumberOfBeds).Must((command, beds) => beds >= command.BaseNumberOfBeds));
             RuleFor(x => x.BaseBedPrice).BaseBedPriceValidation();
             When(x => x.ExtraBedPrice != null, () => RuleFor(x => x.ExtraBedPrice).ExtraBedPriceValidation());
-            When(x => x.SingleGuestSurcharge != null, () => RuleFor(x => x.SingleGuestSurcharge).SingleGuestSurchargeValidation());
+            When(
+                x => x.SingleGuestSurcharge != null,
+                () => RuleFor(x => x.SingleGuestSurcharge).SingleGuestSurchargeValidation());
             RuleFor(x => x.Area).AreaValidation();
             RuleFor(x => x.RoomType).RoomTypeValidation();
             RuleFor(x => x.RoomDescription).RoomDescriptionValidation();

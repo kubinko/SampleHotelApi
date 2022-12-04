@@ -73,7 +73,7 @@ namespace SampleHotelApi.Application.Commands
         /// <typeparam name="T">Command type.</typeparam>
         /// <param name="rule">Rule</param>
         /// <returns>Validation rule</returns>
-        public static IRuleBuilderOptions<T, decimal> BaseBedPriceValidation<T>(this IRuleBuilder<T, decimal> rule)
+        public static IRuleBuilderOptions<T, decimal?> BaseBedPriceValidation<T>(this IRuleBuilder<T, decimal?> rule)
             => rule
                 .NotNull()
                 .GreaterThanOrEqualTo(0);

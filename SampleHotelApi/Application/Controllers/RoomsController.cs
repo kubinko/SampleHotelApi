@@ -23,7 +23,7 @@ namespace SampleHotelApi.Application.Controllers
         /// <response code="403">User does not have sufficient rights to add rooms.</response>
         /// <response code="409">Room with specified number already exists.</response>
         [HttpPost(Name = nameof(AddRoom))]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(NewRecordId))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
@@ -109,5 +109,10 @@ namespace SampleHotelApi.Application.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GetAllRoomsQuery.RoomHeader>))]
         public async Task<IEnumerable<GetAllRoomsQuery.RoomHeader>> GetAllRooms()
             => await this.SendRequest(new GetAllRoomsQuery());
+
+        private class NewRecordId
+        {
+            public long Id { get; set; }
+        }
     }
 }

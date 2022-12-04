@@ -26,7 +26,7 @@ namespace SampleHotelApi.Application.Commands
         /// <summary>
         /// Price per base bed.
         /// </summary>
-        public decimal BaseBedPrice { get; set; }
+        public decimal? BaseBedPrice { get; set; }
 
         /// <summary>
         /// Price for extra bed.
