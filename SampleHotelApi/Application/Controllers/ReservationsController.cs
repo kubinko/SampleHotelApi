@@ -48,7 +48,7 @@ namespace SampleHotelApi.Application.Controllers
         public async Task<IActionResult> UpdateReservationInformation(long id, UpdateReservationCommand command)
         {
             command.Id = id;
-            await this.SendRequest(command);
+            await this.Mediator().Send(command);
 
             return Ok();
         }
@@ -68,7 +68,7 @@ namespace SampleHotelApi.Application.Controllers
         public async Task<IActionResult> UpdateReservationState(long id, UpdateReservationStateCommand command)
         {
             command.Id = id;
-            await this.SendRequest(command);
+            await this.Mediator().Send(command);
 
             return Ok();
         }
@@ -82,7 +82,7 @@ namespace SampleHotelApi.Application.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteReservation(long id)
         {
-            await this.SendRequest(new DeleteReservationCommand() { Id = id });
+            await this.Mediator().Send(new DeleteReservationCommand() { Id = id });
 
             return NoContent();
         }

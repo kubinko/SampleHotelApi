@@ -10,7 +10,7 @@ namespace SampleHotelApi.Application.Commands
     /// <summary>
     /// Handler for <see cref="UpdateCommentCommand"/>.
     /// </summary>
-    public class UpdateCommentCommandHandler : IRequestHandler<UpdateCommentCommand, Unit>
+    public class UpdateCommentCommandHandler : IRequestHandler<UpdateCommentCommand>
     {
         private readonly ICommentRepository _repository;
 
@@ -24,16 +24,13 @@ namespace SampleHotelApi.Application.Commands
         }
 
         /// <inheritdoc/>
-        public Task<Unit> Handle(UpdateCommentCommand request, CancellationToken cancellationToken)
+        public Task Handle(UpdateCommentCommand request, CancellationToken cancellationToken)
         {
-            Comment? comment = _repository.GetComment(request.Id);
-            if (comment == null)
-            {
-                throw new NotFoundException(string.Format(Resources.ResourceNotFound, request.Id));
-            }
-
+            Comment? comment = _repository.GetComment(request.Id)
+                ?? throw new NotFoundException(string.Format(Resources.ResourceNotFound, request.Id));
             _repository.UpdateComment(request.Id, request.Text);
-            return Unit.Task;
+
+            return Task.CompletedTask;
         }
     }
 }

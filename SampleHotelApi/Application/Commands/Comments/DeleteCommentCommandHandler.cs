@@ -7,7 +7,7 @@ namespace SampleHotelApi.Application.Commands
     /// <summary>
     /// Handler for <see cref="DeleteCommentCommand"/>.
     /// </summary>
-    public class DeleteCommentCommandHandler : IRequestHandler<DeleteCommentCommand, Unit>
+    public class DeleteCommentCommandHandler : IRequestHandler<DeleteCommentCommand>
     {
         private readonly ICommentRepository _repository;
 
@@ -21,10 +21,11 @@ namespace SampleHotelApi.Application.Commands
         }
 
         /// <inheritdoc/>
-        public Task<Unit> Handle(DeleteCommentCommand request, CancellationToken cancellationToken)
+        public Task Handle(DeleteCommentCommand request, CancellationToken cancellationToken)
         {
             _repository.DeleteComment(request.Id);
-            return Unit.Task;
+
+            return Task.CompletedTask;
         }
     }
 }

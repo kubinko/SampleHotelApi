@@ -40,7 +40,7 @@ namespace SampleHotelApi.Application.Controllers
         public async Task<IActionResult> UpdateCommentText(long id, UpdateCommentCommand command)
         {
             command.Id = id;
-            await this.SendRequest(command);
+            await this.Mediator().Send(command);
 
             return Ok();
         }
@@ -54,7 +54,7 @@ namespace SampleHotelApi.Application.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> RemoveComment(long id)
         {
-            await this.SendRequest(new DeleteCommentCommand() { Id = id });
+            await this.Mediator().Send(new DeleteCommentCommand() { Id = id });
 
             return NoContent();
         }

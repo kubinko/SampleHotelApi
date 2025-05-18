@@ -13,8 +13,8 @@ namespace SampleHotelApi.Application.Commands
     /// Handler for <see cref="UpdateReservationCommand"/>.
     /// </summary>
     public class UpdateReservationCommandHandler :
-        IRequestHandler<UpdateReservationCommand, Unit>,
-        IRequestHandler<UpdateReservationStateCommand, Unit>
+        IRequestHandler<UpdateReservationCommand>,
+        IRequestHandler<UpdateReservationStateCommand>
     {
         private readonly IReservationRepository _repository;
         private readonly IRoomRepository _roomRepository;
@@ -37,7 +37,7 @@ namespace SampleHotelApi.Application.Commands
         }
 
         /// <inheritdoc/>
-        public async Task<Unit> Handle(UpdateReservationCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateReservationCommand request, CancellationToken cancellationToken)
         {
             Reservation? reservation = _repository.GetReservation(request.Id);
             if (reservation == null)
@@ -70,12 +70,10 @@ namespace SampleHotelApi.Application.Commands
                     new ReservationFinishedNotification() { ReservationId = request.Id },
                     cancellationToken);
             }
-
-            return Unit.Value;
         }
 
         /// <inheritdoc/>
-        public async Task<Unit> Handle(UpdateReservationStateCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateReservationStateCommand request, CancellationToken cancellationToken)
         {
             Reservation? reservation = _repository.GetReservation(request.Id);
             if (reservation == null)
@@ -88,12 +86,10 @@ namespace SampleHotelApi.Application.Commands
 
             if (originalState != ReservationState.Finished && request.State == ReservationState.Finished)
             {
-                _mediator.Publish(
+                await _mediator.Publish(
                     new ReservationFinishedNotification() { ReservationId = request.Id },
                     cancellationToken);
             }
-
-            return Unit.Value;
         }
 
         private bool IsRoomOccupied(DateTime dateFrom, DateTime dateTo, long roomId, long reservationId)

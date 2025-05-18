@@ -1,7 +1,6 @@
 ﻿using FluentValidation.AspNetCore;
 using Kros.AspNetCore;
 using Kros.AspNetCore.HealthChecks;
-using MediatR;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.BuilderMiddlewares;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -41,7 +40,7 @@ namespace SampleHotelApi
             services.AddJwtAuthentication(Configuration.GetSection("ApiJwtAuthorization").Get<ApiJwtAuthorizationSettings>());
 
             services
-                .AddMediatR(Assembly.GetExecutingAssembly())
+                .AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()))
                 .AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
                 .AddScoped<IActiveUserInfoService, ActiveUserInfoService>()
                 .AddSingleton<IDatabase, Database>()
@@ -93,7 +92,7 @@ namespace SampleHotelApi
         /// <param name="loggerFactory">The logger factory.</param>
         public override void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
-            if (Environment.IsTestOrDevelopment())
+            if (true || Environment.IsTestOrDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();

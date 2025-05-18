@@ -11,7 +11,7 @@ namespace SampleHotelApi.Application.Commands
     /// <summary>
     /// Handler for <see cref="UpdateRoomCommand"/>.
     /// </summary>
-    public class UpdateRoomCommandHandler : IRequestHandler<UpdateRoomCommand, Unit>
+    public class UpdateRoomCommandHandler : IRequestHandler<UpdateRoomCommand>
     {
         private readonly IRoomRepository _repository;
 
@@ -25,7 +25,7 @@ namespace SampleHotelApi.Application.Commands
         }
 
         /// <inheritdoc/>
-        public Task<Unit> Handle(UpdateRoomCommand request, CancellationToken cancellationToken)
+        public Task Handle(UpdateRoomCommand request, CancellationToken cancellationToken)
         {
             Room? existingRoom = _repository.GetRoom(request.Id);
             if (existingRoom == null)
@@ -48,7 +48,7 @@ namespace SampleHotelApi.Application.Commands
 
             _repository.UpdateRoom(request.Id, request.Adapt<Room>());
 
-            return Unit.Task;
+            return Task.CompletedTask;
         }
     }
 }

@@ -49,7 +49,7 @@ namespace SampleHotelApi.Application.Controllers
         public async Task<IActionResult> UpdateRoomInformation(long id, UpdateRoomCommand command)
         {
             command.Id = id;
-            await this.SendRequest(command);
+            await this.Mediator().Send(command);
 
             return Ok();
         }
@@ -66,7 +66,7 @@ namespace SampleHotelApi.Application.Controllers
         [Authorize(Policy = Policies.AdminPolicyName)]
         public async Task<IActionResult> RemoveRoom(long id)
         {
-            await this.SendRequest(new RemoveRoomCommand() { Id = id });
+            await this.Mediator().Send(new RemoveRoomCommand() { Id = id });
 
             return NoContent();
         }
@@ -82,7 +82,7 @@ namespace SampleHotelApi.Application.Controllers
         [Authorize(Policy = Policies.AdminPolicyName)]
         public async Task<IActionResult> RemoveAllRooms()
         {
-            await this.SendRequest(new RemoveAllRoomsCommand());
+            await this.Mediator().Send(new RemoveAllRoomsCommand());
 
             return NoContent();
         }

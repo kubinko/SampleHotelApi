@@ -7,7 +7,7 @@ namespace SampleHotelApi.Application.Commands
     /// <summary>
     /// Handler for <see cref="RemoveRoomCommand"/>.
     /// </summary>
-    public class RemoveRoomCommandHandler : IRequestHandler<RemoveRoomCommand, Unit>, IRequestHandler<RemoveAllRoomsCommand, Unit>
+    public class RemoveRoomCommandHandler : IRequestHandler<RemoveRoomCommand>, IRequestHandler<RemoveAllRoomsCommand>
     {
         private readonly IRoomRepository _repository;
 
@@ -21,19 +21,19 @@ namespace SampleHotelApi.Application.Commands
         }
 
         /// <inheritdoc/>
-        public Task<Unit> Handle(RemoveRoomCommand request, CancellationToken cancellationToken)
+        public Task Handle(RemoveRoomCommand request, CancellationToken cancellationToken)
         {
             _repository.RemoveRoom(request.Id);
 
-            return Unit.Task;
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc/>
-        public Task<Unit> Handle(RemoveAllRoomsCommand request, CancellationToken cancellationToken)
+        public Task Handle(RemoveAllRoomsCommand request, CancellationToken cancellationToken)
         {
             _repository.RemoveAllRooms();
 
-            return Unit.Task;
+            return Task.CompletedTask;
         }
     }
 }
